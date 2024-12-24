@@ -1,4 +1,4 @@
-import  Food  from '../models/Food.js'; // Assuming you're using a Mongoose model
+import  Food  from '../models/food.js'; // Assuming you're using a Mongoose model
 import {uploadImage}  from '../middleware/Multer.js';
 
 export const AddItem = async (req, res) => {
