@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
         required: false, // Mobile number is optional
         match: [/^\d{10}$/, 'Please fill a valid 10-digit mobile number'] // Mobile number format validation (adjust if needed)
       },
+      token:{
+        type: String,
+        required: true,  // Make name required
+        trim: true,      // Remove extra spaces
+      },
     createdAt: {
         type: Date,
         default: Date.now, // Set default value to the current date/time

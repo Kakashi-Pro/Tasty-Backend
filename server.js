@@ -4,11 +4,11 @@ import { connectDb } from './config/ApplicationDBContext.js';  // Make sure this
 import userRouter from './routes/userRouter.js';  
 import restaurantRouter from './routes/restaurantRouter.js';
 import foodRouter from './routes/FoodRouter.js';
-
+import dotenv from 'dotenv';
 
 const app = express();
 const port =  process.env.port||5053;
-
+dotenv.config();
 // Middleware
 app.use(express.json());
 app.use(cors());  // Fixed typo from 'cros' to 'cors'

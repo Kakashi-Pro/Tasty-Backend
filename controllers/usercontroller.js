@@ -1,9 +1,21 @@
 
 import User from '../models/Users.js';  
 import bcrypt from 'bcryptjs';
-
-
+import jwt from 'jsonwebtoken';
 // Controller to create a new user
+
+
+const genratetoken = (id) =>{
+    const payload = {
+      id,  // You can include other user information in the payload as needed
+    };
+
+    const secretKey = process.env.JWT_SECRET_KEY || 'your-secret-key';  // Secret key from environment
+    
+
+    return jwt.sign(payload, secretKey);
+}
+
 export const createUser = async (req, res) => {
     const { name, email, password } = req.body;
 
@@ -22,11 +34,14 @@ export const createUser = async (req, res) => {
         const newUser = new User({
             name,
             email,
-            password: hashedPassword  // Store the hashed password
+            password: hashedPassword
         });
 
         // Save the user
+        const token =genratetoken(newUser._id);
+        newUser.token = token;
         await newUser.save();
+        
 
         // Return success response
         return res.status(201).json({
@@ -34,6 +49,7 @@ export const createUser = async (req, res) => {
             user: {
                 name: newUser.name,
                 email: newUser.email,
+                token:token,
                 createdAt: newUser.createdAt
             }
         });
@@ -164,6 +180,8 @@ export const login=async (req, res)=>{
         return res.status(500).json({ message: 'Internal Server Error' + error});
     }
 }
+
+ 
 // login code with Email or with Mobile No 
 // export const login=async (req, res)=>{
 //     try{
